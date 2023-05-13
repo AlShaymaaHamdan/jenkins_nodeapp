@@ -10,5 +10,14 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Run Tests
-          command: npm run test
+          name: Build Image
+          command: docker build -t shaymaa/node .
+      - run:
+          name: Login to DockerHub
+          command: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+      - run:
+          name: Pushing to DockerHub
+          command: docker push shaymaa12/node:lts
+      - run:
+          name: Running Container
+          command: docker run -d -p 3000:3000 --name node-app shaymaa12/node
