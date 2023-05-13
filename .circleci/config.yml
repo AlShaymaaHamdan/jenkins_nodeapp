@@ -19,7 +19,7 @@ jobs:
           command: docker build -t shaymaa/node .
       - run:
           name: Login to DockerHub
-          command: docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
+          command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
       - run:
           name: Pushing to DockerHub
           command: docker push shaymaa12/node:lts
