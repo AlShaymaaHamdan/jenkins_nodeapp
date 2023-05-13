@@ -11,15 +11,12 @@ jobs:
       - image: cimg/node:20.1.0
     steps:
       - checkout
-      - run:
-          name: Install Docker client
-          command: apk add docker-cli
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
       - run:
           name: Build Image
-          command: docker build -t shaymaa/node .
+          command: docker build -t shaymaa12/node .
       - run:
           name: Login to DockerHub
           command: echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_USERNAME --password-stdin
