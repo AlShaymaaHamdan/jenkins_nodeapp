@@ -21,7 +21,9 @@ jobs:
       - setup_remote_docker   
       - run:
         name: Publish Docker image
-        command: echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin docker push shaymaa12/node:lts
+        command: |
+          echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+          docker push shaymaa12/node:lts
 workflows:
   version: 2
   build-push:
