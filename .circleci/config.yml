@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
-            echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+            echo $DOCKERHUB_PASSWORD | docker login --username $DOCKERHUB_USERNAME --password-stdin
             docker push shaymaa12/node:lts
 workflows:
   version: 2
