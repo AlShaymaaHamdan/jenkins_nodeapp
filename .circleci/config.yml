@@ -4,7 +4,6 @@ executors:
   docker-publisher:
     docker:
       - image: docker:stable
-
 jobs:
   build:
     executor: docker-publisher
@@ -13,8 +12,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: docker build --tag shaymaa12/node:lts .
-      
+          command: docker build --tag shaymaa12/node:lts .      
   push:
     executor: docker-publisher
     steps:
@@ -22,7 +20,7 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
-            docker login --username "${{ secrets.DOCKERHUB_USERNAME }}" --password "${{ secrets.DOCKERHUB_PASSWORD }}"
+            docker login --username=shaymaa12 --email=SAHamdan@aspire-services.net --password="${{ secrets.DOCKERHUB_PASSWORD }}"
             docker push shaymaa12/node:lts
 workflows:
   version: 2
