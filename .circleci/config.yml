@@ -1,28 +1,32 @@
 version: 2.1
-workflows:
-  test-deploy:
-    jobs:
-      - test:
-          context:
-            - DockerHub
-jobs:
-  test:
+
+executors:
+  docker-publisher:
     docker:
-      - image: cimg/node:20.1.0
+      - image: docker:stable
+
+jobs:
+  build:
+    executor: docker-publisher
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.14
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
-          name: Build Image
-          command: docker build -t shaymaa12/node:lts .
+          name: Build Docker image
+          command: docker build --tag shaymaa12/node:lts .
+      
+  push:
+    executor: docker-publisher
+    steps:
+      - setup_remote_docker   
       - run:
-          name: Login to DockerHub
-          command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-      - run:
-          name: Pushing to DockerHub
-          command: docker push shaymaa12/node:lts
-      - run:
-          name: Running Container
-          command: docker run -d -p 3000:3000 --name node shaymaa12/node:lts
+        name: Publish Docker image
+        command: echo "$DOCKERHUB_PASSWORD" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin docker push shaymaa12/node:lts
+workflows:
+  version: 2
+  build-push:
+    jobs:
+      - build
+      - push:
+          requires:
+            - build
