@@ -3,9 +3,11 @@ executors:
   docker-publisher:
     docker:
       - image: docker:stable
+        auth:
+          username: $username
+          password: $user
 jobs:
   build:
-    context: DockerHub
     executor: docker-publisher
     steps:
       - checkout
@@ -14,14 +16,13 @@ jobs:
           name: Build Docker image
           command: docker build --tag shaymaa12/node:lts .      
   push:
-    context: DockerHub
     executor: docker-publisher
     steps:
       - setup_remote_docker   
       - run:
           name: Publish Docker image
           command: |
-            docker login -u $user -p $password
+            docker login -u $username -p $user
             docker push shaymaa12/node:lts
 workflows:
   version: 2
