@@ -14,7 +14,7 @@ jobs:
       - setup_remote_docker
       - run:
           name: Build Docker image
-          command: docker build --tag shaymaa12/node:lts .      
+          command: docker build --tag test_node:lts .      
   push:
     executor: docker-publisher
     steps:
@@ -22,8 +22,9 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
+            docker tag test_node:lts shaymaa12/test_node:lts
             docker login -u $username -p $user
-            docker push shaymaa12/node:lts
+            docker push shaymaa12/test_node:lts
 workflows:
   version: 2
   build-push:
