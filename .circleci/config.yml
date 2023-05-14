@@ -16,7 +16,7 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Build Image
-          command: docker build -t shaymaa12/node .
+          command: docker build -t shaymaa12/node:lts .
       - run:
           name: Login to DockerHub
           command: echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
@@ -25,4 +25,4 @@ jobs:
           command: docker push shaymaa12/node:lts
       - run:
           name: Running Container
-          command: docker run -d -p 3000:3000 --name node-app shaymaa12/node
+          command: docker run -d -p 3000:3000 --name node shaymaa12/node:lts
