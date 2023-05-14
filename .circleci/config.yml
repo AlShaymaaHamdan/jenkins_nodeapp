@@ -1,15 +1,11 @@
-version: 2.1
-executors:
-  docker-publisher:
-    docker:
-      - image: docker:stable
-        auth:
-          username: $username
-          password: $user
+version: 2.1        
 jobs:
   test:
     docker:
       - image: cimg/node:20.1.0
+        auth:
+          username: $username
+          password: $user
     steps:
       - checkout
       - setup_remote_docker
@@ -23,7 +19,7 @@ jobs:
             docker run -d -p 3000:3000 --name node shaymaa12/test_node:lts
 workflows:
   version: 2
-  build-push:
+  build:
     jobs:
       - test:
           context: DockerHub
