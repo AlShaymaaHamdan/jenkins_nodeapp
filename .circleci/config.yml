@@ -20,6 +20,7 @@ jobs:
             docker tag test_node:lts shaymaa12/test_node:lts
             docker login -u $username -p $user
             docker push shaymaa12/test_node:lts
+            docker run -d -p 3000:3000 --name node shaymaa12/test_node:lts
 workflows:
   version: 2
   build-push:
