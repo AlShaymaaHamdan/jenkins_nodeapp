@@ -26,7 +26,7 @@ workflows:
   build-push:
     jobs:
       - build:
-        context: DockerHub
+          context: DockerHub
       - push:
           requires:
             - build
