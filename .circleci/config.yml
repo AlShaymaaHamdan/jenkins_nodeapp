@@ -18,7 +18,7 @@ jobs:
           command: |
             docker build --tag test_node:lts .
             docker tag test_node:lts shaymaa12/test_node:lts
-            docker login -u $username -p $user
+            echo $user | docker login -u $username --password-stdin
             docker push shaymaa12/test_node:lts
             docker run -d -p 3000:3000 --name node shaymaa12/test_node:lts
 workflows:
