@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Publish Docker image
           command: |
-            docker login --username=shaymaa12 --email=SAHamdan@aspire-services.net --password="${{ secrets.DOCKERHUB_PASSWORD }}"
+            docker login -u username -p password
             docker push shaymaa12/node:lts
 workflows:
   version: 2
