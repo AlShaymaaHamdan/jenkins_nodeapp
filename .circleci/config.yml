@@ -3,9 +3,6 @@ jobs:
   test:
     docker:
       - image: cimg/node:20.1.0
-        auth:
-          username: $username
-          password: $user
     steps:
       - checkout
       - setup_remote_docker
