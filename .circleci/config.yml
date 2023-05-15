@@ -1,8 +1,7 @@
 version: 2.1        
 jobs:
   test:
-    docker:
-      - image: docker:stable
+    docker
     steps:
       - checkout
       - setup_remote_docker
