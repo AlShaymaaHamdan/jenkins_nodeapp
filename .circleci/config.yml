@@ -11,9 +11,9 @@ jobs:
       - run:
           name: Build Image
           command: |
-            docker build --tag shaymaa12/test_node:pipeline.number .
+            docker build --tag shaymaa12/test_node:<<pipeline.number>> .
             echo $user | docker login -u $username --password-stdin
-            docker push shaymaa12/test_node:lts
+            docker push shaymaa12/test_node:<<pipeline.number>>
             docker run -d -p 3000:3000 --name node shaymaa12/test_node:<<pipeline.number>>
 workflows:
   version: 2
