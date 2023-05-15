@@ -10,11 +10,16 @@ jobs:
           docker_layer_caching: true
       - run:
           name: Build Image
-          command: |
-            docker build --tag shaymaa12/test_node:<<pipeline.number>> .
-            echo $user | docker login -u $username --password-stdin
-            docker push shaymaa12/test_node:<<pipeline.number>>
-            docker run -d -p 3000:3000 --name node shaymaa12/test_node:<<pipeline.number>>
+          command: docker build --tag $username/test_node:<<pipeline.number>> .
+      - run:
+          name: Login to DockerHub
+          command: echo $user | docker login -u $username --password-stdin
+      - run:
+          name: Push Image to DockerHub
+          command: docker push $username/test_node:<<pipeline.number>>
+      - run:
+          name: Run Container from Image
+          command: docker run -d -p 3000:3000 --name node $username/test_node:<<pipeline.number>>
 workflows:
   version: 2
   build:
