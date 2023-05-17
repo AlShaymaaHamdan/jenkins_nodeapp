@@ -33,5 +33,6 @@ workflows:
           tag: "latest"
           dockerfile: dockerfile
           path: .
+          registry-id: AWS_ECR_REGISTRY_ID
           requires:
             - test
