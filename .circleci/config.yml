@@ -1,4 +1,6 @@
-version: 2.1        
+version: 2.1     
+orbs:
+  aws-ecr: circleci/aws-ecr@8.2.1
 jobs:
   test:
     docker:
@@ -26,3 +28,10 @@ workflows:
     jobs:
       - test:
           context: DockerHub
+      - aws-ecr/build-and-push-image:
+          repo: cicd
+          tag: "latest"
+          dockerfile: dockerfile
+          path: .
+          requires:
+            - test
