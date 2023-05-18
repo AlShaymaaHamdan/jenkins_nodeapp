@@ -29,7 +29,7 @@ workflows:
       - test
       - aws-ecr/build-and-push-image:
           repo: cicd
-          tag: << pipeline.number >>
+          tag: "<< pipeline.number >>"
           dockerfile: dockerfile
           path: .
           requires:
