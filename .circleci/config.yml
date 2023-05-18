@@ -10,15 +10,15 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
-      - run:
-          name: Build Image
-          command: docker build --tag $username/test_node:$CIRCLE_BUILD_NUM .
-      - run:
-          name: Login to DockerHub
-          command: echo $user | docker login -u $username --password-stdin
-      - run:
-          name: Push Image to DockerHub
-          command: docker push $username/test_node:$CIRCLE_BUILD_NUM
+#       - run:
+#           name: Build Image
+#           command: docker build --tag $username/test_node:$CIRCLE_BUILD_NUM .
+#       - run:
+#           name: Login to DockerHub
+#           command: echo $user | docker login -u $username --password-stdin
+#       - run:
+#           name: Push Image to DockerHub
+#           command: docker push $username/test_node:$CIRCLE_BUILD_NUM
 #       - run:
 #           name: Run Container from Image
 #           command: docker run -d -p 3000:3000 --name node $username/test_node:$CIRCLE_BUILD_NUM
@@ -26,13 +26,13 @@ workflows:
   version: 2
   build:
     jobs:
-      - test:
-          context: DockerHub
+      - test
+#           context: DockerHub
       - aws-ecr/build-and-push-image:
           repo: cicd
-          tag: $CIRCLE_BUILD_NUM
+          tag: lts
           dockerfile: dockerfile
           path: .
-          registry-id: AWS_ECR_REGISTRY_ID
+#           registry-id: AWS_ECR_REGISTRY_ID
           requires:
             - test
