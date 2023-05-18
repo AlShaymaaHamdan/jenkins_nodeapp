@@ -10,18 +10,15 @@ jobs:
       - setup_remote_docker:
           version: 20.10.14
           docker_layer_caching: true
-#       - run:
-#           name: Build Image
-#           command: docker build --tag $username/test_node:$CIRCLE_BUILD_NUM .
-#       - run:
-#           name: Login to DockerHub
-#           command: echo $user | docker login -u $username --password-stdin
-#       - run:
-#           name: Push Image to DockerHub
-#           command: docker push $username/test_node:$CIRCLE_BUILD_NUM
-#       - run:
-#           name: Run Container from Image
-#           command: docker run -d -p 3000:3000 --name node $username/test_node:$CIRCLE_BUILD_NUM
+  deploy:
+    docker: 
+      - image: docker:stable
+    steps:
+      - run:
+          name: Login to AWS and run the Image
+          command: |
+            ssh -o StrictHostKeyChecking=no ins_circle@ec2-18-234-50-11.compute-1.amazonaws.com " aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 564162621498.dkr.ecr.us-east-1.amazonaws.com &&
+            sudo docker run -d -p 3000:3000 --name node 564162621498.dkr.ecr.us-east-1.amazonaws.com/cicd:latest"    
 workflows:
   version: 2
   build:
@@ -29,8 +26,11 @@ workflows:
       - test
       - aws-ecr/build-and-push-image:
           repo: cicd
-          tag: lts
+          tag: latest
           dockerfile: dockerfile
           path: .
           requires:
             - test
+      - deploy:
+          requires: 
+            - aws-ecr/build-and-push-image
