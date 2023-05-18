@@ -14,7 +14,6 @@ jobs:
     docker: 
       - image: docker:stable
     steps:
-      steps:
       - add_ssh_keys:
           fingerprints:
             - "a4:f3:22:72:a1:64:11:73:d1:51:9b:31:5f:a8:30:88"
