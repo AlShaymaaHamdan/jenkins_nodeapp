@@ -20,7 +20,7 @@ jobs:
       - run:
           name: Login to AWS and run the Image
           command: |
-            ssh -o StrictHostKeyChecking=no -2 i- $ec2-18-234-50-11.compute-1.amazonaws.com/.ssh/id_rsa ins_circle@ec2-18-234-50-11.compute-1.amazonaws.com " aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 564162621498.dkr.ecr.us-east-1.amazonaws.com &&
+            ssh -2 -o StrictHostKeyChecking=no i- $ec2-18-234-50-11.compute-1.amazonaws.com/.ssh/id_rsa ins_circle@ec2-18-234-50-11.compute-1.amazonaws.com " aws ecr get-login-password --region us-east-1 | sudo docker login --username AWS --password-stdin 564162621498.dkr.ecr.us-east-1.amazonaws.com &&
             sudo docker run -d -p 3000:3000 --name node 564162621498.dkr.ecr.us-east-1.amazonaws.com/cicd:latest"    
 workflows:
   version: 2
