@@ -27,12 +27,10 @@ workflows:
   build:
     jobs:
       - test
-#           context: DockerHub
       - aws-ecr/build-and-push-image:
           repo: cicd
           tag: lts
           dockerfile: dockerfile
           path: .
-#           registry-id: AWS_ECR_REGISTRY_ID
           requires:
             - test
